@@ -142,13 +142,16 @@ export default function Home(): JSX.Element {
       <>
         <div className="bg-white shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="mb-4 text-lg font-medium leading-6 text-gray-900">
-              Scan this QR Code with your mobile wallet
+            <h3 className="mb-4 text-xl font-semibold leading-6 text-yellow-500">
+              Scan this QR code with your Trudenty wallet<sup className="text-gray-900">**</sup> to present your KYC credentials and complete your account opening online.
             </h3>
             <div className="prose">
+              <div className="text-sm text-gray-500">
+                <p><sup>**</sup> To launch the wallet app, you need to use <a href="https://expo.dev/client" target="_blank">Expo Go</a> after <a href="mailto:contact@trudenty.com">receiving our invitation</a>.</p>
+              </div>
               <QRCode
                 value={JSON.stringify(challenge)}
-                className="w-48 h-48"
+                className="w-80 h-80"
                 renderAs="svg"
               />
               <pre>{JSON.stringify(challenge, null, 4)}</pre>
@@ -158,7 +161,7 @@ export default function Home(): JSX.Element {
                   e.preventDefault()
                   simulateScan(challenge)
                 }}
-                className="inline-flex items-center px-4 py-2 font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+                className="inline-flex items-center px-4 py-2 font-medium text-white bg-yellow-500 border border-transparent rounded-md shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 sm:text-sm"
               >
                 Simulate Scanning
               </button>
@@ -192,7 +195,7 @@ export default function Home(): JSX.Element {
 
           {result === undefined ? (
             <>
-              <h3 className="text-lg font-medium leading-6 text-gray-900">
+              <h3 className="text-xl font-semibold leading-6 text-yellow-500">
                 {title}
               </h3>
               <div className="max-w-xl mt-2 text-sm text-gray-500">
@@ -205,7 +208,7 @@ export default function Home(): JSX.Element {
                     e.preventDefault()
                     verifyCredential(presentationRequest, credential)
                   }}
-                  className="inline-flex items-center px-4 py-2 font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+                  className="inline-flex items-center px-4 py-2 font-medium text-white bg-yellow-500 border border-transparent rounded-md shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 sm:text-sm"
                 >
                   Verify Credential
                 </button>
@@ -234,28 +237,24 @@ export default function Home(): JSX.Element {
   }
 
   return (
-    <div className="min-h-screen py-2">
+    <div className="min-h-screen py-2 bg-gray-50">
       <Head>
         <title>Verification Demo</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="w-full px-20 pt-10 pb-20 space-y-8">
-        <div className="prose">
-          <h1>Verification Demo</h1>
+      <main className="w-full px-20 space-y-8">
+        <div className="prose max-w-fit">
+          <h1>Credentials Verification</h1>
           <p>
             This is a simple example of how to verify a credential using a
             self-custodied identity wallet.
-          </p>
-          <p>
             The first page prompts a compatible mobile wallet to scan a QR code.
             When you click <em>Simulate Scanning</em>, it will follow the URL to
             retrieve the full presentation request. Assuming the mobile wallet
             does not share state with the browser, details about the user and
             verification request are encoded in a JWT and passed along in the
             URL.
-          </p>
-          <p>
             Using{" "}
             <a href="https://identity.foundation/presentation-exchange">
               Presentation Exchange
@@ -273,24 +272,18 @@ export default function Home(): JSX.Element {
               presentationRequest={verificationRequest}
             ></VerificationOffer>
 
-            <div className="prose">
+            <div className="prose" style={{ maxWidth: "100%" }}>
               <h2>Presentation Request</h2>
               <p>
                 Then, using the Presentation Exchange spec, the server will
                 issue a Presentation Request that we, as the client, will
                 fulfill. Below is the Presentation Request.
               </p>
-            </div>
-            <div className="prose" style={{ maxWidth: "100%" }}>
               <pre>{JSON.stringify(verificationRequest, null, 4)}</pre>
-            </div>
-            <div className="prose">
               <h2>Verifiable Credential</h2>
               <p>
                 This is the Verifiable Credential we will use for verification.
               </p>
-            </div>
-            <div className="prose" style={{ maxWidth: "100%" }}>
               <pre>{JSON.stringify(credential, null, 4)}</pre>
             </div>
           </>
