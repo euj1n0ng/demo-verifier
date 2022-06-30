@@ -141,31 +141,30 @@ export default function Home(): JSX.Element {
     return (
       <>
         <div className="bg-white shadow sm:rounded-lg">
-          <div className="px-4 py-5 sm:p-6">
-            <h3 className="mb-4 text-xl font-semibold leading-6 text-yellow-500">
-              Scan this QR code with your Trudenty wallet<sup className="text-gray-900">**</sup> to present your KYC credentials and complete your account opening online.
+          <div className="prose max-w-fit px-4 py-5 sm:p-6">
+            <h3 className="mb-4 text-lg font-semibold leading-6 text-yellow-500">
+              Scan this QR code with your demo Trudenty wallet app. <br /><br />
+              To be granted access to the demo Trudenty wallet app, contact the <a href="mailto:contact@trudenty.com">team</a> on contact@trudenty.com
             </h3>
-            <div className="prose">
-              <div className="text-sm text-gray-500">
-                <p><sup>**</sup> To launch the wallet app, you need to use <a href="https://expo.dev/client" target="_blank">Expo Go</a> after <a href="mailto:contact@trudenty.com">receiving our invitation</a>.</p>
-              </div>
-              <QRCode
-                value={JSON.stringify(challenge)}
-                className="w-80 h-80"
-                renderAs="svg"
-              />
-              <pre>{JSON.stringify(challenge, null, 4)}</pre>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault()
-                  simulateScan(challenge)
-                }}
-                className="inline-flex items-center px-4 py-2 font-medium text-white bg-yellow-500 border border-transparent rounded-md shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 sm:text-sm"
-              >
-                Simulate Scanning
-              </button>
+            <div className="text-xs text-gray-500">
+              <p>(Please note: Scanning the QR code with your camera will not work - scanning is only possible from within the Trudenty wallet app)</p>
             </div>
+            <QRCode
+              value={JSON.stringify(challenge)}
+              className="w-72 h-72"
+              renderAs="svg"
+            />
+            <pre>{JSON.stringify(challenge, null, 4)}</pre>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault()
+                simulateScan(challenge)
+              }}
+              className="inline-flex items-center px-4 py-2 font-medium text-white bg-yellow-500 border border-transparent rounded-md shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 sm:text-sm"
+            >
+              Simulate Scanning
+            </button>
           </div>
         </div>
       </>
@@ -245,24 +244,18 @@ export default function Home(): JSX.Element {
 
       <main className="w-full px-20 space-y-8">
         <div className="prose max-w-fit">
-          <h1>Credentials Verification</h1>
+          <h1>Verification of Know Your Customer (KYC) credentials in financial use cases</h1>
           <p>
-            This is a simple example of how to verify a credential using a
-            self-custodied identity wallet.
-            The first page prompts a compatible mobile wallet to scan a QR code.
-            When you click <em>Simulate Scanning</em>, it will follow the URL to
-            retrieve the full presentation request. Assuming the mobile wallet
-            does not share state with the browser, details about the user and
-            verification request are encoded in a JWT and passed along in the
-            URL.
-            Using{" "}
-            <a href="https://identity.foundation/presentation-exchange">
-              Presentation Exchange
-            </a>{" "}
-            the server will prompt us to provide a credential that satisfies its
-            constraints. When you click the <em>Verify Credential</em> button,
-            it will submit it to the server to be verified.
+            This is a demo of the Credential Verification process that individuals will experience from their Trudenty self-custody identity wallet.
           </p>
+          <ul>
+            <li>The individual receives a request to present their KYC credentials from a verifier (from whom the individual has initiated a transaction request)</li>
+            <li>The verification request includes a specification of the method of information shareability required (e.g., Zero Knowledge Proof) <span className="text-gray-400">(not in demo)</span></li>
+            <li>The individual scans the QR code using their wallet to share the credential and approves the shareability method requested</li>
+            <li>The verifier checks the validity of the credential by checking the issuer’s signature</li>
+            <li>If the credential presented is valid, the verifier allows the transaction</li>
+            <li>The verifier has access to the individual’s information as specified by the shareability method approved</li>
+          </ul>
         </div>
         {page === "challenge" ? <Scan challenge={jobResponse}></Scan> : null}
 
